@@ -7,7 +7,7 @@ You'll spend lots of time looking at something that says "something happened, co
 To do that, and to correctly understand and escalate it properly, you need to understand the chain of investigation :
 Activity → Event → Log → Detection → Alert → Investigation
 
-This chain is broken down below \/ :D
+This chain is broken down below ↓ :D
 
 ### Event 
 
@@ -34,6 +34,22 @@ It holds a record of *Who* did the Event, on *Which* device, *What* action was d
 
 If you confuse Logs for Events: Events is something happening. Logs are the records of what happened.
 
+> 2026-10-05 23:08:01 [INFO] [AuthService] User authentication successful for UID: 4092
+> 2026-10-05 23:08:03 [WARN] [DBPool] High connection latency detected: 420ms (Threshold: 200ms)
+> 2026-10-05 23:08:05 [ERROR] [PaymentGateway] Transaction failed: Timeout awaiting response from provider
+
+If you got to know enough, you can skip these next lines and go straight to the next heading; Alert.
+
+How do Linux logs differ from Windows logs?
+Both have a different structure of logs.
+Linux has plain-text files or binary journald logs, and it has a numeric UID as an identifier (0 for root, 1000 for users, etc.).
+
+> Oct  5 23:12:01 server sudo: pam_unix(sudo:session): session opened for user root(uid=0) by alice(uid=1000) 
+> Oct 05 23:14:02 web-01 systemd[1]: Started Apache HTTP Server.
+
+Windows has a very structured XML/binary .evtx files with predefined fields. It also doesn't have a simple UID, it has an SID; Security Identifier.
+Just a notice: When you open the Windows Event Manager and you see the Event ID, that's not the log's SID; The Event ID tells you what happened (4624 → Successful windows logon, 4625 → Failed logon. etc.), whereas the SID shows who did it.
+![Windows Event Manager](https://www.freecodecamp.org/news/content/images/2021/10/ss-10.png)
 
 ### Alert 
 
@@ -100,4 +116,33 @@ WINWORD.EXE alone may not look suspicious at all, but once powershell becomes it
 Imagine: You always log in computer at 09:00AM. One day, you log in at 12:30PM. 
 This could trigger an anomaly detection.
 Anomaly Detection follows the principle that normal behavior = baseline. Any deviation from it would be an anomaly.
-Establishing a baseline is important and its one of the easiest mitigation techniques for detecting anomalies.
+Establishing a baseline is important and its one of the easiest mitigation techniques for detecting anomalies. That's what we'll talk about next.
+
+
+### Baseline
+
+Your baseline is the understanding of what's normal. It's the fundamental of Anomaly Detection.
+Without a baseline, it's harder to determine what unusual would look like.
+For example, a server normally communicates with 192.0.2.152. One night it suddenly starts communicating with 203.0.113.211.
+From your normal baseline, being that the server communicates with a specific IP (In this case, 192.0.2.152), you'd feel something wrong is going on when the server started communicating with a different IP.
+If you didn't have that baseline, then it wouldn't have looked strange!
+
+### Indicators
+#### Indicator of Compromise (IOC)
+
+This is a piece of information you can use to identify or investigate the activity.
+It is an evidence or clue associated with compromise. Just because you see on doesn't automatically mean the device is already compromised.
+
+Some indicator that you'll see and use are:
+- IP addresses: An incoming message from a malicious IP can already indicate more than enough whether that email is safe to open or not. You can check for malicious IP Addresses on any site, but preferably [VirusTotal](https://www.virustotal.com/gui/home/upload). It has lots of uses, and will be mentioned again.
+- Domains & URLs: Some phishing campaigns make exact copies of the phished website. Pass the Domain or URL through VirusTotal (Above) to make sure it's safe.
+- File hashes: File hashes are unique. If you want to make sure your file is legit, compare the hash value of your downloaded file (generated locally) to an official checksum published on a trusted source (Like VirusTotal, or the vendor.)
+- Filename: A name can give away whether the file is compromised or not. This is usually done in phishing, when people are sent files and are asked to open it. These could also be done with an injected file that looks legit but doesn't come from a trusted source. Once you open it, the malware/attacker is free to move in your device/network.
+- Username/Email address: Just like filename, a misspelled email or username could spoil the attack before it even reaches its destination target.
+- Process: As in a previous example, WINWORD.EXE spawning powershell.exe already shows the attack.
+
+#### Indicator of Attack (IOA)
+
+Different from a compromise, but completes it.
+An IOA means that something happened/ is happening, such as PowerShell running out of nowhere for a split second with a long command that downloads a payload and executes it. 
+You don't necessarily have to know the exact malware, but you have to know it indicates an attack has happened.
