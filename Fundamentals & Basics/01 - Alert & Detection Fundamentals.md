@@ -146,3 +146,45 @@ Some indicator that you'll see and use are:
 Different from a compromise, but completes it.
 An IOA means that something happened/ is happening, such as PowerShell running out of nowhere for a split second with a long command that downloads a payload and executes it. 
 You don't necessarily have to know the exact malware, but you have to know it indicates an attack has happened.
+
+
+### TTP
+
+As intimidating as this sounds, it isn't.
+It simply describes how attackers operate.
+
+TTP = **Tactics** + **Techniques** + **Procedures**
+Tactic is the attacker's onjective. Technique is the method used to achieve it. Procedure is the actual implementation.
+
+An easier way to remember this is asking yourself 3 questions : What do they want? How are they achieving it? What exactly are they doing?
+As much as attackers can change their IP, domain, hash, or anything else, their behavioral patterns can remain recognizable.
+
+--- 
+
+Now that we've gone through all this, you may want to practice it a bit.
+
+``` markdown
+ALERT: Suspicious PowerShell Activity
+
+Host: WS-102
+User: John Doe
+Parent Process: WINWORD.EXE
+Child Process: POWERSHELL.EXE
+
+Command:
+powershell -enc [base64 data]
+
+Destination:
+203.0.113.231
+```
+
+When you analyze this, you'll simply find the ***event*** as PowerShell execution.
+The ***log*** is that the endpoint recorded the process creation and command line.
+Your ***detection*** rule is an identified suspicious PowerShell behavior.
+Your ***indicator*** is everything that happened.
+Its ***potential IOA*** shows suspicious behavior (Word → PowerShell → Encoded command)
+Could be a ***possible IOC*** if the destination IP turns out to be a known malicious infrastructure.
+Using ***TTP***, you could map the observed behavior to an ATT&CK technique involving PowerShell.
+
+Now comes the most important part: Connecting the dots.
+What document was opened? Was there even any document? What happened after the document was opened? Where did it download from? If there was a process born after it, what was it? Did it create persistence? Did it showed up in the firewall?

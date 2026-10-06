@@ -9,20 +9,13 @@ As a SOC Analyst, you should know what the upcoming points are about just from t
 
 - Alert & Detection Fundamentals
 - The 4 Verdicts (TP/FP/TN/FN)
-- Alert Triage
-- Severity vs Priority
-- Incident FUndamentals
-- Incident Response Lifecyles
+- Alert Triage, Severity vs Priority
+- Incident Fundamentals
+- Incident Response Lifecycles
 - IOC Fundamentals
 - Common IOC Types
-- Authentication Fundamentals
-- Authentication Events
-- Networking Fundamentals
-- TCP vs UDP
-- Important, Common Ports
-- IP Fundamentals
-- DNS Fundamentals
-- HTTP/HTTPS Fundamentals
+- Authentication
+- Networking (TCP vs UDP, Important Common Ports, IP Fundamentals, DNS Fundamentals, HTTP/HTTPS Fundamentals)
 - Firewall Fundamentals
 - IDS vs IPS
 - SIEM Fundamentals
@@ -35,17 +28,19 @@ As a SOC Analyst, you should know what the upcoming points are about just from t
 - Common Attack Techniques
 - Kill Chain Thinking
 - Threat Intelligence
-- Vulnerability Fundamentals
 - Security Controls
-- Least Privilege
-- Defense In Depth
-- Authentication Security
-- Alert Fatigue
 - Correlation
 - Evidence
 - Documentation
 - Escalation
 - The SOC Analyst Investigation Mindset
 - The Core SOC Vocabulary
-
+- Phishing and Email Analysis
+- Log Sources & Basics
+- Triage Workflow/Playbooks
+- Ticketing and Shift Handoff
+- Basic Investigation Tools
+- Cloud and Identity Basics
+- Common Data Sources (Proxy, VPN, email gateway logs)
+- Communication
 ###### This will regularly be updated with more content
