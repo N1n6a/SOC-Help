@@ -7,40 +7,44 @@ If you're a weathered Analyst, you can skip this. Or not. Everyone needs some re
 
 As a SOC Analyst, you should know what the upcoming points are about just from the title. If you happen not to, you can find a markdown file just like this one in the Fundametals & Basics folder! :D
 
+- The Core SOC Vocabulary
 - Alert & Detection Fundamentals
 - The 4 Verdicts (TP/FP/TN/FN)
 - Alert Triage, Severity vs Priority
-- Incident Fundamentals
-- Incident Response Lifecycles
-- IOC Fundamentals
-- Common IOC Types
-- Authentication
-- Networking (TCP vs UDP, Important Common Ports, IP Fundamentals, DNS Fundamentals, HTTP/HTTPS Fundamentals)
+- Documentation, Evidence, Escalation
+- Ticketing and Shift Handoff
+- Communication
+
+- Networking (TCP vs UDP, Important Common Ports, IP, DNS, HTTP/HTTPS)
+- Authentication 
+- Log Sources & Basics
+- Windows Fundamentals
+- Windows Event Logs
+- Linux Fundamentals
+
 - Firewall Fundamentals
 - IDS vs IPS
 - SIEM Fundamentals
 - EDR Fundamentals
+- Basic Investigation Tools
+- Common Data Sources (Proxy, VPN, email gateway logs)
+
+- IOC Fundamentals
+- Common IOC Types
+- Phishing and Email Analysis
 - Malware Fundamentals
-- MITRE ATT&CK
-- Windows Fundamentals
-- Windows Event Logs
-- Linux Fundamentals
 - Common Attack Techniques
+- Incident Fundamentals
+- Incident Response Lifecycles
+
+- Triage Workflow/Playbooks
+- Correlation
+- MITRE ATT&CK
 - Kill Chain Thinking
 - Threat Intelligence
 - Security Controls
-- Correlation
-- Evidence
-- Documentation
-- Escalation
-- The SOC Analyst Investigation Mindset
-- The Core SOC Vocabulary
-- Phishing and Email Analysis
-- Log Sources & Basics
-- Triage Workflow/Playbooks
-- Ticketing and Shift Handoff
-- Basic Investigation Tools
 - Cloud and Identity Basics
-- Common Data Sources (Proxy, VPN, email gateway logs)
-- Communication
+- The SOC Analyst Investigation Mindset
+
+
 ###### This will regularly be updated with more content
