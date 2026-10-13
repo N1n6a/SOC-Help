@@ -3,17 +3,28 @@
 This is the foundation of SOC work. Whether a Tier 1, Tier 2, or Tier 3, it's fundamental and they all fall if this falls. 
 This is the pillar holding everything upright.
 
-You'll spend lots of time looking at something that says "something happened, could be bad. Figure out what the hell this could be".
+You'll spend lots of time looking at something that says "something happened. Could be bad, could be harmless. Figure out what the hell this could be".
 To do that, and to correctly understand and escalate it properly, you need to understand the chain of investigation :
 Activity → Event → Log → Detection → Alert → Investigation
 
 This chain is broken down below ↓ :D
 
+### Activity
+Literally anything on the band of "I did something."
+Opened your device? Activity.
+Logged in? Activity.
+A process started? Activity.
+
+
+
 ### Event 
 
-Simply, something that happened! Could be anything from a successful login to a reported intrusion.
+Simply, something that happened that the system recognized. In shorter words, it's a more specific 'activity'.
+Logged in? That's an activity. Logged in at 11:00AM? That's an event.
+What about opening the laptop and logging in? That's an activity *if* the system didn't recognize it.
+
 Could be someone logging in, a USB device connected, a firewall allowing a connection, a new process starting, etc.
-Basically, any action happening is an event.
+Basically, any action the system recognizes happening is an event.
 
 Keep in mind that not _every_ event is a security event!!!
 
