@@ -43,14 +43,13 @@ Logs are the recorded representaions of events.
 
 It holds a record of *Who* did the Event, on *Which* device, *What* action was done, *What* the results of the action was, *Where* it was done (usually IP, rarely and probably never location), and *When* it was done down to the hour, minute, and second.
 
-If you confuse Logs for Events: Events is something happening. Logs are the records of what happened.
+If you confuse Logs for Events: Events is something happening that the system recognizes. Logs are the records of what happened.
 
 > 2026-10-05 23:08:01 [INFO] [AuthService] User authentication successful for UID: 4092
 > 2026-10-05 23:08:03 [WARN] [DBPool] High connection latency detected: 420ms (Threshold: 200ms)
 > 2026-10-05 23:08:05 [ERROR] [PaymentGateway] Transaction failed: Timeout awaiting response from provider
 
-If you got to know enough, you can skip these next lines and go straight to the next heading; Alert.
-
+If you know enough about logs, skip this and go straight to Detection :D
 How do Linux logs differ from Windows logs?
 Both have a different structure of logs.
 Linux has plain-text files or binary journald logs, and it has a numeric UID as an identifier (0 for root, 1000 for users, etc.).
@@ -62,14 +61,6 @@ Windows has a very structured XML/binary .evtx files with predefined fields. It 
 Just a notice: When you open the Windows Event Manager and you see the Event ID, that's not the log's SID; The Event ID tells you what happened (4624 → Successful windows logon, 4625 → Failed logon. etc.), whereas the SID shows who did it.
 ![Windows Event Manager](https://www.freecodecamp.org/news/content/images/2021/10/ss-10.png)
 
-### Alert 
-
-An alert is generated whenever your security system decides something deserves attention (And sometimes, in uncommon cases, not deserve any but still sounds up. Especially on Windows.)
-
-If, for example, your detection system detects five failed logins followed by a sixth successful login, it might flag it as a "Possible Brute-Force Attack". (Keep in mind: Not every failed login attempt followed by a successful attempt is a successful brute-force. Make use of the IP, the time, user, and other given information to determine whether it actually was a brute-force or a user who just forgot their password.)
-
-The alert isn't the attack itself. It's the system's way of telling you something unusual happened here. It doesn't prove anything.
-You'll understand why **Alert** was added here instead of after **Detection** like in the chain at the beginning of this page.
 
 
 ### Detection
@@ -78,16 +69,15 @@ A detection is the logic used to identify suspicious activity.
 This is where we define the logic/rules for the machine to follow for flagging a suspicious pattern.
 Example of a detection rule:
 > IF
->    user failed logins >= 10
->    within 5 minutes
+>    user failed logins >= 3
+>    within 10 minutes
 > THEN
 >    generate brute-force alert
-A brute-force alert is raised when a user fails logging in for 10 times in under 300 seconds.
-This doesn't necessarily mean there really was a brute-force attempt. The user could have mistakenly mistyped. Make sure who was the person behind it.
+This past example is further explored down.
 
-Another detection rule (Surprisingly common but a reliable way hackers still use):
+Another detection rule (Surprisingly common but a reliable way hackers still use, and will probably never be obsolete):
 > IF
->    parent_process = WINWORD.EXE
+>    parent_process = WinWord.exe
 > AND
 >    child_process = powershell.exe
 > THEN
@@ -96,6 +86,39 @@ This raises an alert if the parent process WINWORD.EXE (Microsoft Word) spawns a
 An attached Microsoft Word file, when opened, spawns a powershell execution, thus infecting the said device.
 For this attack, look at [https://attack.mitre.org/techniques/T1059/]
 
+
+
+### Alert 
+
+An alert is generated whenever your security system decides something deserves attention (And sometimes, in uncommon cases, not deserve any but still sounds up. Especially on Windows.)
+
+If, for example, your detection system detects five failed logins followed by a sixth successful login, it might flag it as a "Possible Brute-Force Attack". (Keep in mind: Not every failed login attempt followed by a successful attempt is a successful brute-force. Make use of the IP, the time, user, and other given information to determine whether it actually was a brute-force or a user who just forgot their password.)
+
+> 02:14:03 FAIL user=ABC ip=192.0.2.241
+> 02:14:05 FAIL user=ABC ip=192.0.2.241
+> 02:14:07 FAIL user=ABC ip=192.0.2.241
+> 02:14:09 FAIL user=ABC ip=192.0.2.241
+> 02:14:11 FAIL user=ABC ip=192.0.2.241
+> 02:14:13 SUCCESS user=ABC ip=192.0.2.241
+> 09:30:10 FAIL user=CBA ip=198.51.100.19
+> 09:30:45 FAIL user=CBA ip=198.51.100.19
+> 09:31:30 SUCCESS user=CBA ip=198.51.100.19
+
+In this example, inspired by the detection rule we wrote up, raises an alert; There's been more than or equal to three failed login attempts within 10 minutes. The other two failed logins didn't raise an alert since the threshold of at least three failed logins hasn't been met.
+
+The alert isn't the attack itself. It's simply the system's way of telling you something unusual happened here. It doesn't really prove anything.
+
+
+
+### Investigation
+
+This is the human part in the chain of investigation.
+Basically, what the analyst does after an alert.
+Mostly, it's gathering context and decide whether it's malicious, benign, or needs escalation.
+
+Most of the times, if not all, it ends with a verdict and a report.
+
+After all of this, there are other things you should know. They're covered below :)
 
 ### Signature
 
@@ -142,7 +165,7 @@ If you didn't have that baseline, then it wouldn't have looked strange!
 #### Indicator of Compromise (IOC)
 
 This is a piece of information you can use to identify or investigate the activity.
-It is an evidence or clue associated with compromise. Just because you see on doesn't automatically mean the device is already compromised.
+It is an evidence or clue associated with compromise. Just because you see it, it doesn't automatically mean the device is already compromised.
 
 Some indicator that you'll see and use are:
 - IP addresses: An incoming message from a malicious IP can already indicate more than enough whether that email is safe to open or not. You can check for malicious IP Addresses on any site, but preferably [VirusTotal](https://www.virustotal.com/gui/home/upload). It has lots of uses, and will be mentioned again.
