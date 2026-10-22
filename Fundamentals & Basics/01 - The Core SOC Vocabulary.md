@@ -102,7 +102,7 @@ E.x.: A user mistyped their password 10 times. System was wrong.
 No alert, and nothing bad happened.
 
 ### False Negative (FN)
-No aleert, but something bad ***did*** happen.
+No alert, but something bad ***did*** happen.
 This is the scariest, because nobody knows the attacker is already inside.
 This is mostly a Tier 3 Analyst job.
 
