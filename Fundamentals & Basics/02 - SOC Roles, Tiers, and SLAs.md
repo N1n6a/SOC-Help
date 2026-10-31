@@ -22,7 +22,7 @@ Not to trouble you, but it's not the easy job just because it's the first tier. 
 
 #### Tier 2 (Incident Analyst)
 
-This is where TIer 1's escalation goes, and where the real investigation starts.
+This is where Tier 1's escalation goes, and where the real investigation starts.
 
 In this tier, you'll dig deeper into logs, the host, and the network traffic. You will also have to confirm whether the alert is a True Positive or a False Positive. Also, add working out the scope to the list; *which machines? Which users?? HOW FAR DID IT SPREAD?!?!*
 And after it, the hard part : Containment. Yeah, and then you escalate it to Tier 3 when it's too complex or serious, and it has already spread beyond containment.
